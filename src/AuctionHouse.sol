@@ -12,8 +12,11 @@ contract AuctionHouse {
     mapping (address => uint) public bids;
     address[] public bidders;
 
-    constructor () {
+    constructor (string memory _item, uint256 _biddingTime) {
         owner = msg.sender;
+        item = _item;
+        auctionEndTime = block.timestamp + _biddingTime;
+
     }
 
 }
