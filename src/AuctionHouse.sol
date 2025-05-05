@@ -19,4 +19,30 @@ contract AuctionHouse {
 
     }
 
+    function  bid (uint256 _auctionEndTime, uint256 _amount) external {
+        require(block.timestamp < auctionEndTime, "Auction has already ended");
+        require(_amount > 0, "Cant bid zero");
+        require(_amount > bids[msg.sender], "Bids must be higher than your previous bid");
+
+        if(bids[msg.sender] == 0){
+            bidders.push(msg.sender);
+
+
+        }
+        bids[msg.sender] = _amount;
+        if(_amount > highestBid){
+            highestBid = _amount;
+            highestBidder = msg.sender;
+        }
+
+       
+    }
+
+     function endAuction () external{
+        require(block.timestamp >= auctionEndTime, "Auction has not ended");
+        require(!ended, "Auction end has already been called");
+
+        ended = true;
+    }
+
 }
