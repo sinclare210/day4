@@ -19,7 +19,7 @@ contract AuctionHouse {
 
     }
 
-    function  bid (uint256 _auctionEndTime, uint256 _amount) external payable {
+    function  bid (uint256 _amount) external payable {
         require(block.timestamp < auctionEndTime, "Auction has already ended");
         require(_amount > 0, "Cant bid zero");
         require(_amount > bids[msg.sender], "Bids must be higher than your previous bid");
