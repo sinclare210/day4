@@ -19,7 +19,7 @@ contract AuctionHouse {
 
     }
 
-    function  bid (uint256 _auctionEndTime, uint256 _amount) external {
+    function  bid (uint256 _auctionEndTime, uint256 _amount) external payable {
         require(block.timestamp < auctionEndTime, "Auction has already ended");
         require(_amount > 0, "Cant bid zero");
         require(_amount > bids[msg.sender], "Bids must be higher than your previous bid");
@@ -31,7 +31,7 @@ contract AuctionHouse {
         }
         bids[msg.sender] = _amount;
         if(_amount > highestBid){
-            highestBid = _amount;
+            highestBid += _amount;
             highestBidder = msg.sender;
         }
 
@@ -52,6 +52,20 @@ contract AuctionHouse {
 
     function getAllBidders() public view returns (uint256, address[] memory){
         return (bidders.length, bidders);
-    }    
+    }
+
+    function withdraw() public {
+    require(ended, "Auction must be ended before withdrawing");
+    require(msg.sender != highestBidder, "Winner cannot withdraw");
+
+    uint256 amount = bids[msg.sender];
+    require(amount > 0, "No funds to withdraw");
+
+    bids[msg.sender] = 0;
+
+    (bool success, ) = payable(msg.sender).call{value: amount}("");
+    require(success, "Transfer failed");
+    }
+
 
 }
