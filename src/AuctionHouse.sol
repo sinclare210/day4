@@ -2,7 +2,7 @@
 pragma solidity ^0.8.19;
 
 contract AuctionHouse {
-    string[] data = new string[](2);
+    
     address public owner;
     uint256 public auctionEndTime;
     string public item;
@@ -28,7 +28,7 @@ contract AuctionHouse {
         }
         bids[msg.sender] = _amount;
         if (_amount > highestBid) {
-            highestBid += _amount;
+            highestBid = _amount;
             highestBidder = msg.sender;
         }
     }
