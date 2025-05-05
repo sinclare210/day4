@@ -7,10 +7,9 @@ import {Script} from "forge-std/Script.sol";
 contract AuctionHouseScript is Script {
     AuctionHouse public auctionHouse;
 
-    function run() public{
+    function run() public {
         vm.startBroadcast();
         auctionHouse = new AuctionHouse("Vintage Clock", 3600);
         vm.stopBroadcast();
     }
-
 }
