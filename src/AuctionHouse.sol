@@ -45,4 +45,13 @@ contract AuctionHouse {
         ended = true;
     }
 
+    function getWinner () external view returns (address, uint256){
+        require(ended, "auction hasnt ended yet");
+        return(highestBidder, highestBid);
+    } 
+
+    function getAllBidders() public view returns (uint256, address[] memory){
+        return (bidders.length, bidders);
+    }    
+
 }
