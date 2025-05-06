@@ -2,7 +2,6 @@
 pragma solidity ^0.8.19;
 
 contract AuctionHouse {
-    
     address public owner;
     uint256 public auctionEndTime;
     string public item;
